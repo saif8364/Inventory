@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audit Log History — Inventory OS</title>
+  <script>
+    if (localStorage.getItem('inventory_theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/tables.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/toast.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/dark-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">⚡</div>
+        <div class="sidebar-brand-text">Inventory OS</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">Main</div>
+          <a href="/pages/dashboard.html" class="sidebar-link">
+            <span class="icon">📊</span> Dashboard
+          </a>
+          <a href="/pages/inventory.html" class="sidebar-link">
+            <span class="icon">📦</span> Inventory Items
+          </a>
+          <a href="/pages/categories.html" class="sidebar-link">
+            <span class="icon">🏷️</span> Categories
+          </a>
+          <a href="/pages/history.html" class="sidebar-link active">
+            <span class="icon">⏱️</span> Audit History
+          </a>
+        </div>
+
+        <div class="sidebar-section admin-only">
+          <div class="sidebar-section-title">Administration</div>
+          <a href="/pages/users.html" class="sidebar-link">
+            <span class="icon">👥</span> User Accounts
+          </a>
+          <a href="/pages/permissions.html" class="sidebar-link">
+            <span class="icon">🔑</span> Category Access
+          </a>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">Account</div>
+          <a href="/pages/settings.html" class="sidebar-link">
+            <span class="icon">⚙️</span> Settings
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-user-avatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name">User</div>
+            <div class="sidebar-user-role">Member</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="top-header-left">
+          <button type="button" class="mobile-menu-btn">☰</button>
+          <h2 class="text-md font-semibold">Audit Logs & History</h2>
+        </div>
+
+        <div class="top-header-right">
+          <button type="button" class="theme-toggle" title="Toggle Dark/Light Mode">
+            <span class="theme-toggle-icon"><i class="ph ph-moon"></i></span>
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm logout-btn">Logout</button>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <main class="page-content">
+        <div class="page-header mb-6">
+          <h1 class="page-title">Inventory History</h1>
+          <p class="page-subtitle">Full timestamped audit trail of inventory creations, updates, quantity changes, and deletions.</p>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="card mb-6">
+          <div class="card-body py-4">
+            <div class="filter-bar">
+              <label for="history-action-filter" class="form-label mb-0">Filter Action:</label>
+              <select id="history-action-filter" class="form-select filter-select">
+                <option value="">All Actions</option>
+                <option value="CREATE">CREATE (New Item)</option>
+                <option value="QUANTITY_CHANGE">QUANTITY_CHANGE (Stock Adjusted)</option>
+                <option value="UPDATE">UPDATE (Metadata Edit)</option>
+                <option value="DELETE">DELETE (Item Removed)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- History Log Table -->
+        <div class="card">
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Log ID</th>
+                  <th>Item Name</th>
+                  <th>Action Type</th>
+                  <th>Quantity Transition</th>
+                  <th>Delta</th>
+                  <th>Performed By & Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="history-table-body">
+                <tr>
+                  <td colspan="6" class="text-center py-6">
+                    <span class="spinner"></span> Loading audit log...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Footer -->
+          <div class="pagination" id="history-pagination">
+            <!-- Dynamic controls -->
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/components/toast.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/history.js"></script>
+</body>
+</html>

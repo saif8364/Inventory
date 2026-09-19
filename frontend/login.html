@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Inventory Management System</title>
+  <script>
+    if (localStorage.getItem('inventory_theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/toast.css">
+  <link rel="stylesheet" href="/css/dark-mode.css">
+
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-secondary);
+      padding: var(--space-4);
+      position: relative;
+    }
+
+    .login-theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-lg);
+      color: var(--text-primary);
+      transition: all var(--transition-base);
+    }
+
+    .login-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+      justify-content: center;
+    }
+
+    .login-brand-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--accent);
+      color: white;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: 0 0 20px rgba(255, 75, 75, 0.4);
+    }
+
+    .login-brand-title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: var(--space-6);
+    }
+
+    .login-title {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+      color: var(--text-primary);
+    }
+
+    .login-subtitle {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    .login-card .form-label {
+      color: var(--text-secondary);
+    }
+
+    .login-card .form-control {
+      background: var(--bg-main);
+      border-color: var(--border-primary);
+      color: var(--text-primary);
+    }
+
+    .login-card .form-control:focus {
+      border-color: var(--accent);
+      background: var(--bg-card);
+    }
+
+    .demo-credentials {
+      margin-top: var(--space-6);
+      padding: var(--space-4);
+      background: var(--bg-secondary);
+      border: 1px dashed var(--border-primary);
+      border-radius: var(--radius-md);
+      font-size: var(--text-xs);
+      color: var(--text-secondary);
+    }
+
+    .demo-credentials code {
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+  <div class="login-theme-toggle">
+    <button type="button" class="theme-toggle" title="Toggle Dark/Light Mode">
+      <span class="theme-toggle-icon"><i class="ph ph-moon"></i></span>
+    </button>
+  </div>
+
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="login-brand-icon">⚡</div>
+      <div class="login-brand-title">Inventory OS</div>
+    </div>
+
+    <div class="login-header">
+      <h1 class="login-title">Welcome back</h1>
+      <p class="login-subtitle">Sign in to manage electronics, sensors & equipment</p>
+    </div>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" id="email" class="form-control" placeholder="admin@inventory.com" required autofocus>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+      </div>
+
+      <button type="submit" id="submit-btn" class="btn btn-primary btn-lg w-full mt-2">
+        Sign In
+      </button>
+    </form>
+
+    <div class="demo-credentials">
+      <div class="font-semibold text-primary mb-1">Default Admin Login:</div>
+      <div>Email: <code>admin@inventory.com</code></div>
+      <div>Password: <code>Admin@123</code> (or <code>Admin123!</code>)</div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/components/toast.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory Items — Inventory OS</title>
+  <script>
+    if (localStorage.getItem('inventory_theme') === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/tables.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/toast.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/dark-mode.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon">⚡</div>
+        <div class="sidebar-brand-text">Inventory OS</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">Main</div>
+          <a href="/pages/dashboard.html" class="sidebar-link">
+            <span class="icon">📊</span> Dashboard
+          </a>
+          <a href="/pages/inventory.html" class="sidebar-link active">
+            <span class="icon">📦</span> Inventory Items
+          </a>
+          <a href="/pages/categories.html" class="sidebar-link">
+            <span class="icon">🏷️</span> Categories
+          </a>
+          <a href="/pages/history.html" class="sidebar-link">
+            <span class="icon">⏱️</span> Audit History
+          </a>
+        </div>
+
+        <div class="sidebar-section admin-only">
+          <div class="sidebar-section-title">Administration</div>
+          <a href="/pages/users.html" class="sidebar-link">
+            <span class="icon">👥</span> User Accounts
+          </a>
+          <a href="/pages/permissions.html" class="sidebar-link">
+            <span class="icon">🔑</span> Category Access
+          </a>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-section-title">Account</div>
+          <a href="/pages/settings.html" class="sidebar-link">
+            <span class="icon">⚙️</span> Settings
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-user-avatar">U</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name">User</div>
+            <div class="sidebar-user-role">Member</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="top-header-left">
+          <button type="button" class="mobile-menu-btn">☰</button>
+          <h2 class="text-md font-semibold">Inventory Catalog</h2>
+        </div>
+
+        <div class="top-header-right">
+          <button type="button" class="theme-toggle" title="Toggle Dark/Light Mode">
+            <span class="theme-toggle-icon"><i class="ph ph-moon"></i></span>
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm logout-btn">Logout</button>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <main class="page-content">
+        <div class="page-header flex justify-between items-center mb-6">
+          <div>
+            <h1 class="page-title">Hardware Inventory</h1>
+            <p class="page-subtitle">Track, search, and manage microcontrollers, sensors, tools & parts.</p>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="Modal.open('add-item-modal')">
+            + Add New Item
+          </button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="card mb-6">
+          <div class="card-body py-4">
+            <div class="filter-bar">
+              <div class="search-input-wrap">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" placeholder="Search item name or description...">
+              </div>
+
+              <select id="category-filter" class="form-select filter-select">
+                <option value="">All Categories</option>
+              </select>
+
+              <select id="subcategory-filter" class="form-select filter-select" disabled>
+                <option value="">All Sub-Categories</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Items Table -->
+        <div class="card">
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Item Details</th>
+                  <th>Category</th>
+                  <th>Sub-Category</th>
+                  <th>Stock Quantity</th>
+                  <th>Last Updated</th>
+                  <th class="text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-table-body">
+                <tr>
+                  <td colspan="6" class="text-center py-6">
+                    <span class="spinner"></span> Loading inventory...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Footer -->
+          <div class="pagination" id="pagination-container">
+            <!-- Dynamic pagination controls rendered here -->
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add Item Modal -->
+  <div class="modal" id="add-item-modal">
+    <div class="modal-overlay">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 class="modal-title">Add New Inventory Item</h3>
+          <button type="button" class="modal-close" data-close-modal>&times;</button>
+        </div>
+        <form id="add-item-form">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="add-item-name" class="form-label required">Item Name</label>
+              <input type="text" id="add-item-name" class="form-control" placeholder="e.g. ESP32 NodeMCU Development Board" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="add-item-category" class="form-label required">Category</label>
+                <select id="add-item-category" class="form-select" required>
+                  <option value="">Select Category</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="add-item-subcategory" class="form-label">Sub-Category</label>
+                <select id="add-item-subcategory" class="form-select" disabled>
+                  <option value="">Select Sub-Category (Optional)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="add-item-quantity" class="form-label required">Initial Quantity</label>
+              <input type="number" id="add-item-quantity" class="form-control" min="0" value="1" required>
+            </div>
+
+            <div class="form-group">
+              <label for="add-item-description" class="form-label">Description / Specs</label>
+              <textarea id="add-item-description" class="form-control" rows="3" placeholder="Technical specs, pinout info, bin location..."></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close-modal>Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Item</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Item Modal -->
+  <div class="modal" id="edit-item-modal">
+    <div class="modal-overlay">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 class="modal-title">Edit Inventory Item</h3>
+          <button type="button" class="modal-close" data-close-modal>&times;</button>
+        </div>
+        <form id="edit-item-form">
+          <input type="hidden" id="edit-item-id">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="edit-item-name" class="form-label required">Item Name</label>
+              <input type="text" id="edit-item-name" class="form-control" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="edit-item-category" class="form-label required">Category</label>
+                <select id="edit-item-category" class="form-select" required>
+                  <option value="">Select Category</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="edit-item-subcategory" class="form-label">Sub-Category</label>
+                <select id="edit-item-subcategory" class="form-select">
+                  <option value="">Select Sub-Category</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="edit-item-quantity" class="form-label required">Stock Quantity</label>
+              <input type="number" id="edit-item-quantity" class="form-control" min="0" required>
+            </div>
+
+            <div class="form-group">
+              <label for="edit-item-description" class="form-label">Description / Specs</label>
+              <textarea id="edit-item-description" class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-close-modal>Cancel</button>
+            <button type="submit" class="btn btn-primary">Update Item</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Quantity Update Modal -->
+  <div class="modal" id="qty-update-modal">
+    <div class="modal-overlay">
+      <div class="modal-container modal-sm">
+        <div class="modal-header">
+          <h3 class="modal-title">Update Stock Quantity</h3>
+          <button type="button" class="modal-close" data-close-modal>&times;</button>
+        </div>
+        <form id="qty-update-form">
+          <input type="hidden" id="qty-item-id">
+          <div class="modal-body text-center">
+            <div class="text-sm text-secondary mb-2">Item: <strong id="qty-item-name-display" class="text-primary"></strong></div>
+            <div class="form-group" style="max-width: 160px; margin: 0 auto;">
+              <input type="number" id="qty-current-value" class="form-control text-center text-lg font-bold" min="0" required>
+            </div>
+          </div>
+          <div class="modal-footer justify-between">
+            <button type="button" class="btn btn-secondary" data-close-modal>Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/components/toast.js"></script>
+  <script src="/js/components/modal.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/inventory.js"></script>
+</body>
+</html>

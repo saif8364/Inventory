@@ -1,0 +1,240 @@
+/* ─── Responsive Breakpoints ────────────────────────── */
+
+/* Tablet: <= 1024px */
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .page-content { padding: var(--space-4); }
+  .top-header { padding: 0 var(--space-4); }
+}
+
+/* Mobile: <= 768px */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 260px;
+    max-width: 85vw;
+    z-index: 1000;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex !important;
+  }
+
+  .grid-4 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+
+  .page-content {
+    padding: var(--space-4);
+    max-width: 100%;
+  }
+
+  .top-header {
+    padding: 0 var(--space-4);
+  }
+
+  .top-header-left {
+    gap: var(--space-2);
+  }
+
+  .top-header-left h2 {
+    font-size: var(--text-sm);
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Page header title & buttons stack */
+  .page-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: var(--space-3) !important;
+  }
+
+  .page-header > div,
+  .page-header > button,
+  .page-header > .flex {
+    width: 100%;
+  }
+
+  .page-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Filter bar stacks vertically */
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+  }
+
+  .search-input-wrap {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .filter-select {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* Forms stack on mobile */
+  .form-row {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Modal full-width on mobile */
+  .modal-container {
+    max-width: calc(100vw - 32px);
+    margin: 0 auto;
+  }
+
+  .modal-header {
+    padding: var(--space-4);
+  }
+  .modal-body {
+    padding: var(--space-4);
+  }
+  .modal-footer {
+    padding: var(--space-3) var(--space-4);
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .modal-footer .btn {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  /* Table reduce padding */
+  .table th,
+  .table td {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+
+  /* Pagination stacks */
+  .pagination {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .toast-container {
+    left: var(--space-4);
+    right: var(--space-4);
+  }
+
+  .toast {
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+  }
+
+  .stat-card {
+    padding: var(--space-3);
+  }
+
+  .confirm-dialog-actions {
+    flex-direction: column;
+  }
+
+  .confirm-dialog-actions .btn {
+    width: 100%;
+  }
+}
+
+/* Small mobile: <= 480px */
+@media (max-width: 480px) {
+  .page-content { padding: var(--space-3); }
+  .top-header { padding: 0 var(--space-3); }
+
+  .page-title { font-size: var(--text-lg); }
+
+  .card-body { padding: var(--space-3); }
+  .card-header {
+    padding: var(--space-3);
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .modal-container {
+    max-width: calc(100vw - 16px);
+  }
+
+  .modal-header { padding: var(--space-3); }
+  .modal-body { padding: var(--space-3); }
+  .modal-footer { padding: var(--space-3); }
+
+  .stat-card {
+    padding: var(--space-3);
+    gap: var(--space-3);
+  }
+
+  .stat-card-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .stat-card-value {
+    font-size: 1.25rem;
+  }
+
+  .item-mini-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-3);
+  }
+
+  .vertical-timeline {
+    padding-left: var(--space-3);
+  }
+
+  .action-btn {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+
+  .icon-button {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Tiny mobile: <= 360px */
+@media (max-width: 360px) {
+  .page-content { padding: var(--space-2); }
+  .top-header { padding: 0 var(--space-2); }
+
+  .top-header-left h2 {
+    font-size: var(--text-xs);
+    max-width: 120px;
+  }
+
+  .card-body { padding: var(--space-2); }
+  .card-header { padding: var(--space-2); }
+
+  .stat-card {
+    gap: var(--space-2);
+  }
+}
+

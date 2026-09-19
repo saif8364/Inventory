@@ -1,0 +1,125 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─── User ───────────────────────────────────────────────
+model User {
+  id            Int      @id @default(autoincrement())
+  name          String
+  email         String   @unique
+  password_hash String
+  role          String   @default("USER") // SUPER_ADMIN | USER
+  is_active     Boolean  @default(true)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  // Relations
+  permissions       CategoryPermission[]
+  created_categories Category[]         @relation("CategoryCreator")
+  created_subcategories SubCategory[]   @relation("SubCategoryCreator")
+  history           InventoryHistory[]
+
+  @@map("users")
+}
+
+// ─── Category ───────────────────────────────────────────
+model Category {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String?
+  created_by  Int?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  // Relations
+  creator       User?              @relation("CategoryCreator", fields: [created_by], references: [id], onDelete: SetNull)
+  subcategories SubCategory[]
+  items         Item[]
+  permissions   CategoryPermission[]
+
+  @@map("categories")
+}
+
+// ─── SubCategory ────────────────────────────────────────
+model SubCategory {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  category_id Int
+  created_by  Int?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  // Relations
+  category Category @relation(fields: [category_id], references: [id], onDelete: Restrict)
+  creator  User?    @relation("SubCategoryCreator", fields: [created_by], references: [id], onDelete: SetNull)
+  items    Item[]
+
+  @@unique([name, category_id])
+  @@map("subcategories")
+}
+
+// ─── Item ───────────────────────────────────────────────
+model Item {
+  id              Int      @id @default(autoincrement())
+  name            String
+  category_id     Int
+  sub_category_id Int?
+  description     String?
+  quantity        Int      @default(0)
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  // Relations
+  category    Category     @relation(fields: [category_id], references: [id], onDelete: Restrict)
+  subcategory SubCategory? @relation(fields: [sub_category_id], references: [id], onDelete: Restrict)
+  history     InventoryHistory[]
+
+  @@index([category_id])
+  @@index([sub_category_id])
+  @@map("items")
+}
+
+// ─── CategoryPermission ─────────────────────────────────
+model CategoryPermission {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  category_id Int
+  permission  String   @default("NONE") // NONE | VIEW | EDIT
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  // Relations
+  user     User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, category_id])
+  @@map("category_permissions")
+}
+
+// ─── InventoryHistory ───────────────────────────────────
+model InventoryHistory {
+  id           Int      @id @default(autoincrement())
+  item_id      Int?
+  user_id      Int
+  action       String   // CREATE | UPDATE | DELETE | QUANTITY_CHANGE
+  old_quantity  Int?
+  new_quantity  Int?
+  created_at   DateTime @default(now())
+
+  // Relations
+  item Item? @relation(fields: [item_id], references: [id], onDelete: SetNull)
+  user User  @relation(fields: [user_id], references: [id], onDelete: Restrict)
+
+  @@index([item_id])
+  @@index([user_id])
+  @@map("inventory_history")
+}

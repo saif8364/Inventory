@@ -1,0 +1,125 @@
+/* ─── Sleek Modern Data Table ────────────────────────── */
+.table-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: var(--text-sm);
+  min-width: 600px;
+}
+
+.table th {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-primary);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  vertical-align: middle;
+  transition: background var(--transition-fast);
+}
+
+.table tbody tr:hover td {
+  background: var(--bg-hover);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+
+/* ─── Compact Responsive Mobile Cards (<= 768px) ──────── */
+@media (max-width: 768px) {
+  .table-container {
+    overflow-x: visible !important;
+  }
+
+  .table {
+    min-width: 0 !important;
+    display: block;
+    width: 100% !important;
+  }
+
+  .table thead {
+    display: none !important;
+  }
+
+  .table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    width: 100%;
+  }
+
+  .table tbody tr {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 0;
+  }
+
+  .table tbody tr td {
+    display: block;
+    padding: 0;
+    border: none !important;
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    width: 100%;
+  }
+
+  /* Remove default horizontal scroll requirement on mobile cards */
+  .table tbody tr td.table-actions,
+  .table tbody tr td:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid var(--border-subtle) !important;
+    width: 100%;
+    gap: 6px;
+  }
+
+  .table-actions {
+    justify-content: flex-end !important;
+    width: 100%;
+  }
+
+  .table-actions .icon-button {
+    width: 30px;
+    height: 30px;
+    font-size: 0.85rem;
+  }
+
+  .table-actions .action-btn {
+    padding: 4px 8px;
+    font-size: 0.72rem;
+  }
+}

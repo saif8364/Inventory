@@ -1,0 +1,143 @@
+/* ─── Minimalist Design System Variables ──────── */
+:root {
+  /* Backgrounds */
+  --bg-main: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-secondary: #F8FAFC;
+  --bg-hover: #F1F5F9;
+  --bg-overlay: rgba(15, 23, 42, 0.6);
+  --bg-primary: #FFFFFF;
+  --bg-tertiary: #E2E8F0;
+  --bg-elevated: #FFFFFF;
+  
+  /* Text */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-tertiary: #94A3B8;
+  --text-inverse: #FFFFFF;
+
+  /* Borders */
+  --border-primary: #E2E8F0;
+  --border-subtle: #F1F5F9;
+  --border-hover: #CBD5E1;
+  --border-focus: #FF4B4B;
+  --border: #E2E8F0;
+  --border-light: #F1F5F9;
+
+  /* Accent Colors */
+  --accent: #FF4B4B; /* Vibrant Red */
+  --accent-hover: #E33B3B;
+  --accent-light: #FFF0F0;
+  
+  --brand-orange: #FF4B4B;
+  --brand-orange-light: #FFF0F0;
+  
+  /* Status */
+  --success: #059669;
+  --success-light: #D1FAE5;
+  --warning: #D97706;
+  --warning-light: #FEF3C7;
+  --danger: #FF4B4B;
+  --danger-light: #FFF0F0;
+  --info: #2563EB;
+  --info-light: #DBEAFE;
+
+  /* Sidebar */
+  --sidebar-bg: #FFFFFF;
+  --sidebar-text: #475569;
+  --sidebar-text-active: #0F172A;
+  --sidebar-hover: #F8FAFC;
+  --sidebar-active: #F1F5F9;
+  --sidebar-border: #E2E8F0;
+  --sidebar-width: 240px;
+
+  /* Radius */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+  --shadow-float: 0 15px 35px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 0 transparent;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.875rem;
+  --text-md: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --header-height: 56px;
+  
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark Mode Overrides (Pure Pitch Black Aesthetic) */
+[data-theme="dark"] {
+  --bg-main: #09090B;
+  --bg-card: #121215;
+  --bg-secondary: #0D0D10;
+  --bg-hover: #1F1F23;
+  --bg-overlay: rgba(0, 0, 0, 0.85);
+  --bg-primary: #121215;
+  --bg-tertiary: #18181B;
+  --bg-elevated: #161619;
+
+  --text-primary: #FAFAFA;
+  --text-secondary: #A1A1AA;
+  --text-tertiary: #71717A;
+  --text-inverse: #09090B;
+
+  --border-primary: #27272A;
+  --border-subtle: #18181B;
+  --border-hover: #3F3F46;
+  --border-focus: #FF4B4B;
+  --border: #27272A;
+  --border-light: #27272A;
+
+  --sidebar-bg: #09090B;
+  --sidebar-text: #A1A1AA;
+  --sidebar-text-active: #FAFAFA;
+  --sidebar-hover: #121215;
+  --sidebar-active: #121215;
+  --sidebar-border: #27272A;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.8);
+  --shadow-float: 0 15px 35px rgba(0, 0, 0, 0.9);
+
+  /* Dark mode status bg adjustments */
+  --accent-light: rgba(255, 75, 75, 0.15);
+  --success-light: rgba(5, 150, 105, 0.15);
+  --warning-light: rgba(217, 119, 6, 0.15);
+  --danger-light: rgba(255, 75, 75, 0.15);
+  --info-light: rgba(37, 99, 235, 0.15);
+}
