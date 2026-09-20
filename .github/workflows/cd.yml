@@ -1,0 +1,29 @@
+name: Inventory Management
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  # ----- CD ----- #
+  deploy:
+    name: Deploying on OCI
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploying
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /home/ubuntu/Gears-Inventory
+            git pull origin main
+            cd /home/ubuntu/Gears-Inventory/backend
+            npm ci
+            pm2 restart gears-inventory
+            
